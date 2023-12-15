@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
+// import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
@@ -35,14 +35,14 @@ export default function ContentModal({children,media_type,id}) {
 
   const fetchData= async()=> {
       const {data} = await axios.get(
-        `https://api.themoviedb.org/3/${media_type}/${id}?api_key=3d7a497b0cb06b8d7ce3562c6d4d1496&language=en-US`
+        `https://api.themoviedb.org/3/${media_type}/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
       );
       setContent(data);
   }
 
   const fetchVideo= async()=> {
     const {data} = await axios.get(
-      `https://api.themoviedb.org/3/${media_type}/${id}/videos?api_key=3d7a497b0cb06b8d7ce3562c6d4d1496&language=en-US`
+      `https://api.themoviedb.org/3/${media_type}/${id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
    //console.log(data);
     setVideo(data.results[0]?.key);
@@ -89,7 +89,7 @@ useEffect(()=>{
               className="ContentModal__portrait" src={content.poster_path?`${img_500}/${content.poster_path}`: unavailable} />
               <img 
               alt={content.name || content.title}
-              className="ContentModal__landscape" src={content.backdrop_path?`${img_500}/${content.backdrop_path}`: unavailable} />
+              className="ContentModal__landscape" src={content.backdrop_path?`${img_500}/${content.backdrop_path}`: unavailableLandscape} />
               <div className='ContentModal__about'>
                 <span className='ContentModal__title'>
                     {content.name || content.title}(
