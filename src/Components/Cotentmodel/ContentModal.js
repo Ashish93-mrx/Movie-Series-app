@@ -68,11 +68,11 @@ useEffect(()=>{
         sx={{ display: "flex",
         alignItems: "center",
         justifyContent: "center",}}
-        // slotProps={{
-        //   backdrop: {
-        //     timeout: 500,
-        //   },
-        // }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
       >
         <Fade in={open}>
          {content && <Box sx={{width: "90%",
