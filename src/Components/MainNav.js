@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 
 export default function SimpleBottomNavigation() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
@@ -33,17 +33,18 @@ export default function SimpleBottomNavigation() {
   };
 
   return (
-    <Box sx={{ width: '100%', position: 'fixed', bottom: 0, backgroundColor: '#2d313a', zIndex: 100 }}>
+    <Box sx={{ width: '100%', position: 'fixed', bottom: 0, zIndex: 100 }}>
       <BottomNavigation
         showLabels
         value={value}
         onChange={handleChange}
       >
-        <BottomNavigationAction label="Trending" icon={<WhatshotOutlinedIcon />} />
-        <BottomNavigationAction label="Movies" icon={<MovieCreationIcon />} />
-        <BottomNavigationAction label="TV Series" icon={<LiveTvIcon />} />
-        <BottomNavigationAction label="Search" icon={<SearchIcon />} />
+        <BottomNavigationAction sx={{ color:"#1976d2" }} label="Trending" icon={<WhatshotOutlinedIcon />} />
+        <BottomNavigationAction sx={{ color:"#1976d2" }} label="Movies" icon={<MovieCreationIcon />} />
+        <BottomNavigationAction sx={{ color:"#1976d2" }} label="TV Series" icon={<LiveTvIcon />} />
+        <BottomNavigationAction sx={{ color:"#1976d2" }} label="Search" icon={<SearchIcon />} />
       </BottomNavigation>
     </Box>
   );
 }
+
