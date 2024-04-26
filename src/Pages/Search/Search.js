@@ -73,6 +73,7 @@ useEffect(()=>{
       </div>
       {numOfPages>1 && (<Custompagination setPage={setPage} />)}
       {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}>𝓐𝓼𝓱</h6>}
+        {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}><a href="https://www.linkedin.com/in/ashish-n-m-2a5706256p">My LinkedIn</a></h6>}
     </>
   );
 };
