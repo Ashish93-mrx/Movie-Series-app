@@ -72,8 +72,10 @@ useEffect(()=>{
         {searchText && !content && (type ? <h2>No series Found</h2> : <h2>No Movies Found</h2>)}
       </div>
       {numOfPages>1 && (<Custompagination setPage={setPage} />)}
-      {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}>𝓐𝓼𝓱</h6>}
-        {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}><a href="https://www.linkedin.com/in/ashish-n-m-2a5706256">My LinkedIn</a></h6>}
+      {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}>Created by 𝓐𝓼𝓱 💓</h6>}
+        {<h6 style={{fontWeight:100,color:"#3b3e3e",display:"flex"}}><a href="https://www.linkedin.com/in/ashish-n-m-2a5706256">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linkedin/linkedin-original.svg" alt="LinkedIn Icon">
+</a></h6>}
     </>
   );
 };
