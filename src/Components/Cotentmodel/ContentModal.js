@@ -95,13 +95,11 @@ useEffect(()=>{
               
               className="ContentModal__portrait" src={content.poster_path?`${img_500}/${content.poster_path}`: unavailable} />
               </span>
-              <span style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
-              <LazyLoadImage 
+              <img 
               alt={content.name || content.title}
               className="ContentModal__landscape"
-              effect="blur"
+              // effect="blur"
               src={content.backdrop_path?`${img_500}/${content.backdrop_path}`: unavailableLandscape} />
-              </span>
               <div className='ContentModal__about'>
                 <span className='ContentModal__title'>
                     {content.name || content.title}(
