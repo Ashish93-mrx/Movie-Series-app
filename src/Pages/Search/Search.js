@@ -8,6 +8,8 @@ import Tab from "@mui/material/Tab";
 import Singlecontent from "../../Components/SingleContent/Singlecontent";
 import axios from "axios";
 import Custompagination from "../../Components/Pagination/Custompagination";
+import useThrottle from "../../hooks/useThrottle";
+
 import Skeleton from "@mui/material/Skeleton";
 import Box from '@mui/material/Box';
 
@@ -83,6 +85,10 @@ const Search = () => {
     setContent(results);
     setNumOfPages(1);
   });
+
+  const throttledSearch = useThrottle(() => {
+    debounceCall(searchText, type, page);
+  }, 1500);
   
 
   return (
@@ -94,15 +100,21 @@ const Search = () => {
             className="searchBox"
             label="Search"
             variant="filled"
-            onChange={(e) => debounceCall(e.target.value)}
+            value={searchText}
+            onChange={(e) => {
+             debounceCall(e.target.value);
+             setSearchText(e.target.value)
+                }
+            }
           />
           <Button
             variant="contained"
             style={{ marginLeft: 10 }}
-            // onClick={}
+            onClick={throttledSearch}
           >
             <SearchIcon />
           </Button>
+
         </div>
         <Tabs
           value={type}
