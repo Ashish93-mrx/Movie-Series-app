@@ -5,6 +5,8 @@ import { noPicture } from '../../config/config';
 import {img_300} from "../../config/config.js";
 import axios from 'axios';
 import "./carousel.css";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const handleDragStart = (e) => e.preventDefault();
 
@@ -14,15 +16,17 @@ const Carousel = ({media_type,id}) => {
   const [credits, setCredits]=useState();
 
 
-  const items=credits?.map((c)=>(
-    <div className='carouselItem'>
-      <img 
-      src={c.profile_path ? `${img_300}/${c.profile_path}`:noPicture}
-      alt={c?.name}
-      onDragStart={handleDragStart}
-      className='carouselItem__img'
+  const items = credits?.map((c) => (
+    <div className="carouselItem" key={c.id}>
+      <LazyLoadImage
+        src={c.profile_path ? `${img_300}/${c.profile_path}` : noPicture}
+        alt={c?.name}
+        effect="blur"
+        onDragStart={handleDragStart}
+        className="carouselItem__img"
+        wrapperClassName="carouselItem__wrapper"
       />
-      <b className='carouselItem__txt'>{c?.name}</b>
+      <b className="carouselItem__txt">{c?.name}</b>
     </div>
   ));
 

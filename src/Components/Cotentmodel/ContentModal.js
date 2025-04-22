@@ -18,11 +18,16 @@ import "./Contentmodal.css";
 import { Button } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import Carousel from '../Carousel/Carousel';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import "react-lazy-load-image-component/src/effects/blur.css";
+import ReactPlayer from 'react-player/youtube';
+import Backdrop from '@mui/material/Backdrop';
 
 
 
 export default function ContentModal({children,media_type,id}) {
   const [open, setOpen] = React.useState(false);
+  const [trailerOpen, setTrailerOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [content,setContent] = useState();
@@ -84,12 +89,19 @@ useEffect(()=>{
     boxShadow: theme.shadows[5],
     padding: theme.spacing(1, 1, 3),}}>
             <div className='ContentModal'>
-              <img 
+            <span style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
+              <LazyLoadImage 
               alt={content.name || content.title}
+              
               className="ContentModal__portrait" src={content.poster_path?`${img_500}/${content.poster_path}`: unavailable} />
-              <img 
+              </span>
+              <span style={{display: 'flex', flexDirection:'column', justifyContent:'center'}}>
+              <LazyLoadImage 
               alt={content.name || content.title}
-              className="ContentModal__landscape" src={content.backdrop_path?`${img_500}/${content.backdrop_path}`: unavailableLandscape} />
+              className="ContentModal__landscape"
+              effect="blur"
+              src={content.backdrop_path?`${img_500}/${content.backdrop_path}`: unavailableLandscape} />
+              </span>
               <div className='ContentModal__about'>
                 <span className='ContentModal__title'>
                     {content.name || content.title}(
@@ -107,18 +119,62 @@ useEffect(()=>{
                   </span>
                   <div><Carousel media_type={media_type} id={id} /></div>
                   <Button
-                  variant='contained'
-                  startIcon={<YouTubeIcon/>}
-                  color="secondary"
-                  target="__blank"
-                  href={`https://www.youtube.com/watch?v=${video}`}
+                    variant='contained'
+                    startIcon={<YouTubeIcon />}
+                    color="secondary"
+                    onClick={() => setTrailerOpen(true)}
                   >
-                  Watch the Trailer
+                    Watch the Trailer
                   </Button>
               </div>
             </div>
           </Box>
          }
+        </Fade>
+      </Modal>
+      <Modal
+        open={trailerOpen}
+        onClose={() => setTrailerOpen(false)}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+            sx: {
+              backdropFilter: 'blur(8px)',
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            },
+          },
+        }}
+      >
+        <Fade in={trailerOpen}>
+          <Box
+            sx={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '80%',
+              maxWidth: '960px',
+              aspectRatio: '16/9',
+              bgcolor: 'black',
+              zIndex: 2,
+              borderRadius: 2,
+              boxShadow: 24,
+              outline: 'none',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <ReactPlayer
+              url={`https://www.youtube.com/watch?v=${video}`}
+              playing
+              controls
+              width="100%"
+              height="100%"
+            />
+          </Box>
         </Fade>
       </Modal>
     </>
