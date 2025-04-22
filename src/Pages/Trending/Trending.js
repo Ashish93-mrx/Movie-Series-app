@@ -4,7 +4,7 @@ import axios from "axios";
 import Singlecontent from "../../Components/SingleContent/Singlecontent";
 import "./trending.css";
 import Custompagination from "../../Components/Pagination/Custompagination";
-
+import CustomShimmerCard from "../../Components/Shimmer/CustomShimmerCard";
 const Trending = () => {
   const [page,setPage]=useState(1);
   const [content, setContent] = useState([]);
@@ -30,8 +30,13 @@ const Trending = () => {
     <div>
       <span className="pageTitle">Trending</span>
       <div className="trending">
-        {content && content.map((c)=>(<Singlecontent key={c.id} id={c.id} poster={c.poster_path} title={c.title || c.name} date={c.first_air_date || c.release_date} media_type={c.media_type} vote_average={c.vote_average}/>)
-        )}
+        {content ? (content.map((c)=>(<Singlecontent key={c.id} id={c.id} poster={c.poster_path} title={c.title || c.name} date={c.first_air_date || c.release_date} media_type={c.media_type} vote_average={c.vote_average}/>)
+        )) : (
+        <div className="trending" style={{ display: 'flex', flexWrap: 'wrap' }}>
+    {Array.from({ length: 8 }).map((_, index) => (
+      <CustomShimmerCard key={index} />
+    ))}
+  </div>)}
       </div>
       <Custompagination setPage={setPage} />
     </div>

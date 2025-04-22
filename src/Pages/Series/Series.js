@@ -4,6 +4,7 @@ import Singlecontent from "../../Components/SingleContent/Singlecontent";
 import Custompagination from "../../Components/Pagination/Custompagination";
 import Genres from "../../Components/Genres";
 import useGenres from "../../hooks/useGenre";
+import CustomShimmerCard from "../../Components/Shimmer/CustomShimmerCard";
 
 
 const Series = () => {
@@ -44,7 +45,12 @@ const Series = () => {
       />
       <div className="trending">
         {content ? content.map((c)=>(<Singlecontent key={c.id} id={c.id} poster={c.poster_path} title={c.title || c.name} date={c.release_date} media_type={"tv"} vote_average={c.vote_average}/>)
-        ) : "no content"}
+        ) : (
+        <div className="trending" style={{ display: 'flex', flexWrap: 'wrap' }}>
+    {Array.from({ length: 8 }).map((_, index) => (
+      <CustomShimmerCard key={index} />
+    ))}
+  </div>)}
       </div>
       {numOfPages>1 && (<Custompagination setPage={setPage} />)}
     </div>

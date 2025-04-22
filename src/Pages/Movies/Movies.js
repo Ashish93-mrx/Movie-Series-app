@@ -4,6 +4,8 @@ import Singlecontent from "../../Components/SingleContent/Singlecontent";
 import Custompagination from "../../Components/Pagination/Custompagination";
 import Genres from "../../Components/Genres";
 import useGenres from "../../hooks/useGenre";
+import ShimmerCard from "../../Components/Shimmer/ShimmerCard";
+import CustomShimmerCard from "../../Components/Shimmer/CustomShimmerCard";
 
 const Movies = () => {
  const[page, setPage]=useState(1);
@@ -11,6 +13,7 @@ const Movies = () => {
  const [numOfPages,setNumOfPages]=useState();
  const [selectedgenres,setSelectedgenres]=useState([]);
  const [genres, setGenres] = useState([]);
+ const [loading, SetLoading] = useState(true);
  const genreforURL=useGenres(selectedgenres);
  
 
@@ -19,6 +22,7 @@ const Movies = () => {
     const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}`);
     setContent(data.results);
     setNumOfPages(data.total_pages);
+    SetLoading(false);
   };
 
   useEffect(()=>{
@@ -39,17 +43,25 @@ const Movies = () => {
         setPage={setPage}
       />
       <div className="trending">
-        {content && 
-        content.map((c)=>(
-          <Singlecontent 
-          key={c.id} 
-          id={c.id} 
-          poster={c.poster_path} 
-          title={c.title || c.name} 
-          date={c.first_air_date || c.release_date} 
-          media_type="movie" 
-          vote_average={c.vote_average}/>)
-        )}
+      {loading ? (
+        <div className="trending" style={{ display: 'flex', flexWrap: 'wrap' }}>
+    {Array.from({ length: 8 }).map((_, index) => (
+      <CustomShimmerCard key={index} />
+    ))}
+  </div>
+      ) : (
+        content.map((c) => (
+          <Singlecontent
+            key={c.id}
+            id={c.id}
+            poster={c.poster_path}
+            title={c.title || c.name}
+            date={c.first_air_date || c.release_date}
+            media_type="movie"
+            vote_average={c.vote_average}
+          />
+        ))
+      )}
       </div>
       {numOfPages>1 && (
         <Custompagination setPage={setPage} numOfPages={numOfPages} />)}
