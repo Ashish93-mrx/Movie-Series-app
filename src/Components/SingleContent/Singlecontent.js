@@ -8,10 +8,10 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 const Singlecontent = ({ id, poster, title, name, date, media_type, vote_average }) => {
   return (
     <ContentModal media_type={media_type} id={id}>
-      <Badge
-        badgeContent={(vote_average != 0) ? vote_average.toFixed(1) : 'Yet to release'}
+      {vote_average && <Badge
+        badgeContent={(vote_average > 0) && vote_average.toFixed(1)}
         color={(vote_average < 6) ? "primary" : "secondary"}
-      />
+      />}
       
       <LazyLoadImage
         className="poster"
